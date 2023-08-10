@@ -1,0 +1,33 @@
+:toc: macro
+:toclevels: 2
+= CloudBees action: Scan with Jfrog-xray
+
+toc::[]
+
+== Overview
+
+Use this action to scan a binaries with Jfrog-xray scanner.
+
+== Usage
+
+In your `yaml` file, add:
+
+[source,yaml]
+----
+
+      - name: Scan with Jfrog-xray
+        uses: cloudbees-io/jfrog-xray@v0
+        with:
+          registryURL: "Jfrog xray registry url."
+          serverURL: "Jfrog xray server url."
+          username: "Jfrog xray username"
+          password: ${{ secrets.JFROG_XRAY_PASSWORD }} #<1>
+          credURL: "Jfrog xray cred url"
+          image_location: "image location"
+          image_tag: "image tag"
+          language: "LANGUAGE_YOURCODELANGUAGE" #<2>
+----
+
+<1> Jfrog xray password.
+<2> `YOURCODELANGUAGE` is the language name, capitalized, of the code base of your Git repository, for example: 
+`         language: "LANGUAGE_GO"`.

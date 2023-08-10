@@ -1,0 +1,41 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: action
+name: jfrog-xray
+inputs:
+  registryURL:
+    required: true
+  serverURL:
+    required: true
+  username:
+    required: true
+  password:
+    required: true
+  credURL:
+    required: true
+  image_location:
+    required: true
+  image_tag:
+    required: true
+  language:
+    required: true
+runs:
+  using: composite
+  steps:
+    - id: run-orchestrator
+      name: jfrog-xray
+      uses: docker://registry.saas-dev.beescloud.com/staging/compliance-xray:19
+      shell: bash
+      env:
+        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.serverURL }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"cred_url\":\"${{ inputs.credURL }}\",\"scope\":\"member-of-groups:readers\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image_location }}\"},\"metaInformation\":{\"scannerType\":\"SCA\"}}'
+        RUN_ID: ${{ cloudbees.run_id }}
+        STEP_ID: ${{ step.id }}
+        JOB_ID: ${{ job.id }}
+        DNS_URL: ${{ cloudbees.api.url }}
+        JWT_TOKEN: ${{ cloudbees.api.token }}
+      run: |
+        set -x
+        cd /
+        mkdir $CB_TAR_PATH
+        skopeo login ${{ inputs.registryURL }} -u ${{ inputs.username }} -p ${{ inputs.password }}
+        skopeo copy docker://${{ inputs.image_location }}:${{ inputs.image_tag }} docker-archive:$CB_TAR_PATH$BINARY_IMAGE_NAME:${{ inputs.image_location }}:${{ inputs.image_tag }}
+        /bin/bash -c "java -jar ./executables/xray.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"
