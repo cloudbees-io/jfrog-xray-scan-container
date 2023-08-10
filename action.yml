@@ -34,6 +34,9 @@ runs:
         JWT_TOKEN: ${{ cloudbees.api.token }}
       run: |
         set -x
+        echo "RUN ID: ${{ cloudbees.run_id }}"
+        echo "Job ID: ${{ job.id }}"
+        echo "Step ID: ${{ step.id }}"
         cd /
         mkdir $CB_TAR_PATH
         skopeo login ${{ inputs.registryURL }} -u ${{ inputs.username }} -p ${{ inputs.password }}
