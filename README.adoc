@@ -19,12 +19,10 @@ In your `yaml` file, add:
         uses: cloudbees-io/jfrog-xray@v0
         with:
           registryURL: "Jfrog xray registry url."
-          serverURL: "Jfrog xray server url."
           username: "Jfrog xray username"
           password: ${{ secrets.JFROG_XRAY_PASSWORD }} #<1>
-          credURL: "Jfrog xray cred url"
-          image_location: "image location"
-          image_tag: "image tag"
+          image-location: "image location"
+          image-tag: "image tag"
           language: "LANGUAGE_YOURCODELANGUAGE" #<2>
 ----
 
