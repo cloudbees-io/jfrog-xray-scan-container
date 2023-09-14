@@ -12,8 +12,6 @@ inputs:
     required: true
   image-tag:
     required: true
-  language:
-    required: true
 runs:
   using: composite
   steps:
@@ -24,11 +22,11 @@ runs:
       env:
         RUN_ID: ${{ cloudbees.run_id }}
         JOB_ID: ${{ job.id }}
-        STEP_ID: ${{step.internal.id}}
+        STEP_ID: ${{ step.internal.id}}
         DNS_URL: ${{ cloudbees.api.url }}
         JWT_TOKEN: ${{ cloudbees.api.token }}
         BINARY_IMAGE_NAME: "binary_asset.tar"
-        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registryURL }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"${{ vars.JFROG_SCOPE }}\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\",\"language\":\"${{ inputs.language }}\"},\"metaInformation\":{\"actor\":\"${{ cloudbees.event.head_commit.author.username }}\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
+        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registryURL }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"${{ vars.JFROG_SCOPE }}\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\"},\"metaInformation\":{\"actor\":\"${{ cloudbees.event.head_commit.author.username }}\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
       run: |
         set -x
         echo "RUN ID: ${{ cloudbees.run_id }}"
@@ -37,5 +35,6 @@ runs:
         echo "DNS URL: ${{ cloudbees.api.url }}"
         echo "JWT TOKEN: ${{ cloudbees.api.token }}"
         cd /
+        crane flatten ${{ inputs.image-location }}:${{ inputs.image-tag }}
         skopeo copy docker://${{ inputs.image-location }}:${{ inputs.image-tag }} docker-archive:$CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME:${{ inputs.image-location }}:${{ inputs.image-tag }}
         /bin/bash -c "java -jar ./executables/xray.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"
