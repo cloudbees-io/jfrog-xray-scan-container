@@ -23,9 +23,6 @@ In your `yaml` file, add:
           password: ${{ secrets.JFROG_XRAY_PASSWORD }} #<1>
           image-location: "image location"
           image-tag: "image tag"
-          language: "LANGUAGE_YOURCODELANGUAGE" #<2>
 ----
 
 <1> Jfrog xray password.
-<2> `YOURCODELANGUAGE` is the language name, capitalized, of the code base of your Git repository, for example: 
-`         language: "LANGUAGE_GO"`.
