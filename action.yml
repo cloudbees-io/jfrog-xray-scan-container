@@ -17,7 +17,7 @@ runs:
   steps:
     - id: jfrog-xray
       name: jfrog-xray
-      uses: docker://registry.saas-dev.beescloud.com/staging/compliance-xray:26
+      uses: docker://registry.saas-dev.beescloud.com/staging/compliance-xray:27
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
@@ -25,7 +25,7 @@ runs:
         STEP_ID: ${{ step.internal.id}}
         DNS_URL: ${{ cloudbees.api.url }}
         JWT_TOKEN: ${{ cloudbees.api.token }}
-        BINARY_IMAGE_NAME: "binary_asset.tar"
+        BINARY_IMAGE_NAME: "xray_binary_asset.tar"
         CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registryURL }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"${{ vars.JFROG_SCOPE }}\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\"},\"metaInformation\":{\"actor\":\"${{ cloudbees.event.head_commit.author.username }}\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
       run: |
         set -x
