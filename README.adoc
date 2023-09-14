@@ -1,28 +1,36 @@
-:toc: macro
-:toclevels: 2
-= CloudBees action: Scan with Jfrog-xray
+= CloudBees action: Scan with JFrog Xray
 
-toc::[]
-
-== Overview
-
-Use this action to scan a binaries with Jfrog-xray scanner.
+Use this action to scan image binaries with the JFrog Xray scanner to identify and fix security vulnerabilities.
 
 == Usage
 
-In your `yaml` file, add:
+In your YAML file, add:
 
 [source,yaml]
 ----
 
-      - name: Scan with Jfrog-xray
-        uses: cloudbees-io/jfrog-xray@v0
+      - name: Scan with JFrog Xray
+        uses: cloudbees-io/jfrog-xray-scan-container@v1
         with:
-          registryURL: "Jfrog xray registry url."
-          username: "Jfrog xray username"
-          password: ${{ secrets.JFROG_XRAY_PASSWORD }} #<1>
-          image-location: "image location"
-          image-tag: "image tag"
+          registryURL: ${{ vars.JFROG_REGISTRY }}#<1>
+          username: ${{ vars.JFROG_USERNAME }}#<2>
+          password: ${{ secrets.JFROG_PASSWORD }}#<3>
+          image-location: "test-example.jfrog.io/local/alpine"#<4>
+          image-tag: "latest"#<5>
+          language: "LANGUAGE_YOURCODELANGUAGE"#<6>
 ----
 
-<1> Jfrog xray password.
+<1> The JFrog registry URL.
+<2> The JFrog username.
+<3> The JFrog password.
+<4> The image location.
+<5> The image tag.
+<6> `YOURCODELANGUAGE` is the language name (in uppercase) of the code base of your Git repository, for example, `+language: "LANGUAGE_GO"+`.
+
+== License
+This code is made available under the 
+link:https://opensource.org/license/mit/[MIT license].
+
+== Reference
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform-actions/latest/[using actions in CloudBees workflows].
+* Learn about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform/latest/[the CloudBees platform].
