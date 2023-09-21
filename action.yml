@@ -35,6 +35,9 @@ runs:
         echo "DNS URL: ${{ cloudbees.api.url }}"
         echo "JWT TOKEN: ${{ cloudbees.api.token }}"
         cd /
+        if [ -f $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME ]; then
+          rm $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME
+        fi
         crane flatten ${{ inputs.image-location }}:${{ inputs.image-tag }}
         skopeo copy docker://${{ inputs.image-location }}:${{ inputs.image-tag }} docker-archive:$CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME:${{ inputs.image-location }}:${{ inputs.image-tag }}
         /bin/bash -c "java -jar ./executables/xray.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"
