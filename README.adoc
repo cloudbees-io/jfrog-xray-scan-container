@@ -17,7 +17,6 @@ In your YAML file, add:
           password: ${{ secrets.JFROG_PASSWORD }}#<3>
           image-location: "test-example.jfrog.io/local/alpine"#<4>
           image-tag: "latest"#<5>
-          language: "LANGUAGE_YOURCODELANGUAGE"#<6>
 ----
 
 <1> The JFrog registry URL.
@@ -25,7 +24,6 @@ In your YAML file, add:
 <3> The JFrog password.
 <4> The image location.
 <5> The image tag.
-<6> `YOURCODELANGUAGE` is the language name (in uppercase) of the code base of your Git repository, for example, `+language: "LANGUAGE_GO"+`.
 
 == License
 This code is made available under the 
