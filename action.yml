@@ -32,8 +32,6 @@ runs:
         echo "RUN ID: ${{ cloudbees.run_id }}"
         echo "Job ID: ${{ job.id }}"
         echo "Step ID: ${{step.internal.id}}"
-        echo "DNS URL: ${{ cloudbees.api.url }}"
-        echo "JWT TOKEN: ${{ cloudbees.api.token }}"
         cd /
         if [ -f $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME ]; then
           rm $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME
