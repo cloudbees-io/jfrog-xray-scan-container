@@ -50,7 +50,7 @@ In your YAML file, add:
       - name: Scan with JFrog Xray
         uses: cloudbees-io/jfrog-xray-scan-container@v1
         with:
-          registryURL: ${{ vars.JFROG_REGISTRY }}
+          registry-url: ${{ vars.JFROG_REGISTRY }}
           username: ${{ vars.JFROG_USERNAME }}
           password: ${{ secrets.JFROG_PASSWORD }}
           image-location: "test-example.jfrog.io/local/alpine"
