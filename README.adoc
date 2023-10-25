@@ -13,7 +13,7 @@ Use this action to scan image binaries with the JFrog Xray scanner to identify a
 | Required?
 | Description
 
-| `registryURL`
+| `registry-url`
 | String
 | Yes
 | The JFrog registry URL.
