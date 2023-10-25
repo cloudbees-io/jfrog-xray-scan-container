@@ -2,7 +2,7 @@ apiVersion: automation.cloudbees.io/v1alpha1
 kind: action
 name: jfrog-xray
 inputs:
-  registryURL:
+  registry-url:
     required: true
   username:
     required: true
