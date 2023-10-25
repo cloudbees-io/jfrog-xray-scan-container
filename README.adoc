@@ -2,7 +2,45 @@
 
 Use this action to scan image binaries with the JFrog Xray scanner to identify and fix security vulnerabilities.
 
-== Usage
+== Inputs
+
+[cols="2a,1a,1a,3a",options="header"]
+.Input details
+|===
+
+| Input name
+| Data type
+| Required?
+| Description
+
+| `registry-url`
+| String
+| Yes
+| The JFrog registry URL.
+
+| `username`
+| String
+| Yes
+| The JFrog username.
+
+| `password`
+| String
+| Yes
+| The JFrog password.
+
+| `image-location`
+| String
+| Yes
+| The container image location.
+
+| `image-tag`
+| String
+| Yes
+| The container image tag.
+
+|===
+
+== Usage example
 
 In your YAML file, add:
 
@@ -12,23 +50,20 @@ In your YAML file, add:
       - name: Scan with JFrog Xray
         uses: cloudbees-io/jfrog-xray-scan-container@v1
         with:
-          registryURL: ${{ vars.JFROG_REGISTRY }}#<1>
-          username: ${{ vars.JFROG_USERNAME }}#<2>
-          password: ${{ secrets.JFROG_PASSWORD }}#<3>
-          image-location: "test-example.jfrog.io/local/alpine"#<4>
-          image-tag: "latest"#<5>
+          registry-url: ${{ vars.JFROG_REGISTRY }}
+          username: ${{ vars.JFROG_USERNAME }}
+          password: ${{ secrets.JFROG_PASSWORD }}
+          image-location: "test-example.jfrog.io/local/alpine"
+          image-tag: "latest"
+
 ----
 
-<1> The JFrog registry URL.
-<2> The JFrog username.
-<3> The JFrog password.
-<4> The image location.
-<5> The image tag.
-
 == License
+
 This code is made available under the 
 link:https://opensource.org/license/mit/[MIT license].
 
-== Reference
+== References
+
 * Learn more about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform-actions/latest/[using actions in CloudBees workflows].
 * Learn about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform/latest/[the CloudBees platform].
