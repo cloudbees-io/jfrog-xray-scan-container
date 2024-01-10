@@ -17,7 +17,7 @@ runs:
   steps:
     - id: jfrog-xray
       name: jfrog-xray
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-14d118e2fe5b75e4509a73a003463af16159315e
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-8b82ac4850d140d4b8f97ffdaaae1e237a9baaac
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
@@ -26,7 +26,7 @@ runs:
         DNS_URL: ${{ cloudbees.api.url }}
         JWT_TOKEN: ${{ cloudbees.api.token }}
         BINARY_IMAGE_NAME: "xray_binary_asset.tar"
-        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registry-url }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"member-of-groups:readers\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\",\"profileIdentifier\":\"${{ inputs.image-tag }}\"},\"metaInformation\":{\"actor\":\"${{ cloudbees.event.head_commit.author.username }}\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
+        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registry-url }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"member-of-groups:readers\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\",\"profileIdentifier\":\"${{ inputs.image-tag }}\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
       run: |
         set -x
         echo "RUN ID: ${{ cloudbees.run_id }}"
