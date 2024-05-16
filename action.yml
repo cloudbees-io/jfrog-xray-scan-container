@@ -17,7 +17,7 @@ runs:
   steps:
     - id: jfrog-xray
       name: jfrog-xray
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-8b82ac4850d140d4b8f97ffdaaae1e237a9baaac
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-f93667912154eaba30ee3a3985386c7caab1e5d6
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
