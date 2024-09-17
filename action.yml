@@ -30,7 +30,8 @@ runs:
         skopeo login -u ${{ inputs.username }} -p ${{ inputs.password }} https://${{ inputs.registry-url }}
         skopeo copy --insecure-policy docker://${{ inputs.image-location }}:${{ inputs.image-tag }} docker-archive:$CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME:${{ inputs.image-location }}:${{ inputs.image-tag }} --dest-oci-accept-uncompressed-layers
         ls -ltr $CLOUDBEES_WORKSPACE
-        
+
+    - id: jfrog-xray
     - name: jfrog-xray
       # uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-5a1518269d904b9979a7d698a9ccd83f7151b024
       uses: docker://020229604682.dkr.ecr.us-east-1.amazonaws.com/actions/jfrog-xray-container-actions:CBP-4732-4191a17a643726be956205caf431476e66a49e7d
