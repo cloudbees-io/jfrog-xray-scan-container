@@ -27,6 +27,7 @@ runs:
         if [ -f $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME ]; then
              rm $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME
         fi
+        skopeo login -u ${{ inputs.username }} -p ${{ inputs.password }} https://${{ inputs.registry-url }}
         skopeo copy --insecure-policy docker://${{ inputs.image-location }}:${{ inputs.image-tag }} docker-archive:$CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME:${{ inputs.image-location }}:${{ inputs.image-tag }} --dest-oci-accept-uncompressed-layers
         ls -ltr $CLOUDBEES_WORKSPACE
         
