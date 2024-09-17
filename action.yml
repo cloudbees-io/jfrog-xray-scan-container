@@ -42,15 +42,11 @@ runs:
         DNS_URL: ${{ cloudbees.api.url }}
         JWT_TOKEN: ${{ cloudbees.api.token }}
         BINARY_IMAGE_NAME: "xray_binary_asset.tar"
-        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registry-url }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"member-of-groups:readers\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\",\"profileIdentifier\":\"${{ inputs.image-tag }}\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"Container\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
+        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.registry-url }}\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"scope\":\"member-of-groups:readers\",\"toolName\":\"xray\"},\"orchestratorInfo\":{\"assetType\":\"BINARY\",\"assetIdentifier\":\"${{ inputs.image-location }}\",\"profileIdentifier\":\"${{ inputs.image-tag }}\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"NA\",\"tenent_info\":\"NA\",\"scanner_type\":\"SCA\",\"pipeline_info\":{\"id\":\"04612\",\"name\":\"test_pipeline\",\"step_id\":\"04612_test_pipeline\"}}}'
       run: |
         set -x
         echo "RUN ID: ${{ cloudbees.run_id }}"
         echo "Job ID: ${{ job.id }}"
         echo "Step ID: ${{step.internal.id}}"
-        cd /
-        # if [ -f $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME ]; then
-        #   rm $CLOUDBEES_WORKSPACE/$BINARY_IMAGE_NAME
-        # fi
 
         /bin/bash -c "java -jar ./executables/xray.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"
