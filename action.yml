@@ -32,7 +32,7 @@ runs:
         ls -ltr $CLOUDBEES_WORKSPACE
 
     - name: jfrog-xray
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-636b7b28beea5d3c7357a712d7dbe984e108eac2
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/jfrog-xray-container-actions:main-617934716c37b4a0b42f4d96d5b02a52c6f5854f
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
